@@ -1,0 +1,78 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  h1 {
+    color: #333;
+  }
+  
+  .search-bar {
+    margin-bottom: 20px;
+  }
+  
+  input[type="text"] {
+    padding: 10px;
+    width: 200px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .weather-details {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  #location {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  #temperature {
+    font-size: 36px;
+    margin-bottom: 10px;
+  }
+  
+  #description {
+    font-size: 18px;
+  }
+  
+  /* Dark Mode Styles */
+  .dark-mode {
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .dark-mode .search-bar input[type="text"] {
+    background-color: #555;
+    color: #fff;
+  }
+  
+  .dark-mode .weather-details {
+    background-color: #555;
+    color: #fff;
+  }
+  
+  .dark-mode #location,
+  .dark-mode #temperature,
+  .dark-mode #description {
+    color: #fff;
+  }
+  
