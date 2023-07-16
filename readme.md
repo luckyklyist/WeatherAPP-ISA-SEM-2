@@ -2,6 +2,8 @@
 
 This is a weather application that allows users to retrieve weather information for a given location. It uses the OpenWeather API to fetch real-time weather data.
 
+![image](https://github.com/luckyklyist/WeatherAPP-ISA-SEM-2/assets/35479077/ff322c6c-7301-4ebb-a798-0dca1d452b36)
+
 ## Features
 
 - Display current weather conditions including temperature, humidity, wind speed, and weather description.
