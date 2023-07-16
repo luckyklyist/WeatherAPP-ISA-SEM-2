@@ -25,9 +25,9 @@ async function getWeather() {
     </span>
     `;
   descriptionElement.innerHTML = `Description: ${data.weather[0].main}`;
-  pressureElement.innerHTML = `Pressure: ${data.main.pressure}`;
-  windSpeedElement.innerHTML = `Wind Speed: ${data.wind.speed}`;
-  humidityElement.innerHTML = `Humidity: ${data.main.humidity}`;
+  pressureElement.innerHTML = `${data.main.pressure}`;
+  windSpeedElement.innerHTML = `${data.wind.speed} m/s`;
+  humidityElement.innerHTML = `${data.main.humidity} %`;
   document.querySelector("#error").innerHTML = '';
 }
 
