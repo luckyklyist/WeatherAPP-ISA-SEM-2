@@ -36,6 +36,6 @@ Run index.html
 
 ## Author
 
-This Weather App was created by [Anupama](https://anupamac.me).
+This Weather App was created by [Anupam AC](https://anupamac.me).
 
 Please feel free to reach out if you have any questions or feedback. Enjoy using the Weather App!
