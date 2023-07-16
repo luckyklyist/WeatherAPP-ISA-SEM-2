@@ -13,10 +13,17 @@ async function getWeather() {
   let pressureElement = document.getElementById('pressure');
   let windSpeedElement = document.getElementById('windSpeed');
   let humidityElement = document.getElementById('humidity');
-  currentData();
+  currentData(data.timezone);
 
   locationElement.innerHTML = 'City: ' + cityInput;
-  temperatureElement.innerHTML = `${data.main.temp}℃`;
+  temperatureElement.innerHTML =
+    `
+    <span>
+    ${data.main.temp}℃ 
+    <img src="http://openweathermap.org/img/w/${data.weather[0].icon}.png" alt="Weather Icon">
+    
+    </span>
+    `;
   descriptionElement.innerHTML = `Description: ${data.weather[0].main}`;
   pressureElement.innerHTML = `Pressure: ${data.main.pressure}`;
   windSpeedElement.innerHTML = `Wind Speed: ${data.wind.speed}`;
@@ -38,12 +45,21 @@ const getWeatherData = async (cityName) => {
   return weatherData;
 }
 
-function currentData() {
+function currentData(timezone) {
   let currentDate = new Date();
-  let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-  let currentDayAndDate = currentDate.toLocaleDateString(undefined, options);
-  document.getElementById('current-day-and-date').textContent = currentDayAndDate;
+  let utcOffset = currentDate.getTimezoneOffset() * 60 * 1000;
+  let cityOffset = timezone * 1000;
+  let currentTimestamp = currentDate.getTime() + utcOffset + cityOffset;
+  let localDate = new Date(currentTimestamp);
+  let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+  let formattedDate = localDate.toLocaleDateString(undefined, options);
+
+  document.getElementById('current-day-and-date').textContent = formattedDate;
 }
+
+
+
+
 
 document.querySelector("#city-input").addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
