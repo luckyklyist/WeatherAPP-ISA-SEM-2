@@ -13,20 +13,29 @@
   </style>
 </head>
 
-<body>
+<body class="bg-gray-100">
   <div class="container mx-auto py-20 text-center">
-    <h1 class="text-4xl font-bold text-gray-700">Weather App</h1>
-    <div class="my-8">
-      <input type="text" placeholder="Enter city name" id="city-input"
-        class="p-2 w-56 border border-gray-300 focus:outline-none focus:border-blue-500">
-      <button onclick="getWeather()"
-        class="px-4 py-2 bg-green-500 text-white font-bold border border-green-500 rounded cursor-pointer ml-4">Search</button>
+    
+    <div class="flex flex-col items-center justify-center text-4xl font-bold text-gray-700 mt-8 mb-16">
+      <div class="mb-4">
+        Weather App
+      </div>
+      <img src="https://uxwing.com/wp-content/themes/uxwing/download/weather/weather-icon.png" alt="" class="h-16">
     </div>
     
-    
-    <div class="bg-white p-8 rounded-lg shadow-lg">
+    <div class="my-8 flex items-center justify-center ">
+      <input type="text" placeholder="Enter city name" id="city-input"
+        class="p-3 w-64 border border-gray-300 rounded-l-lg focus:outline-none focus:border-blue-500 placeholder-gray-400">
+      <button onclick="getWeather()"
+        class="px-6 py-3 bg-green-500 text-white font-bold rounded-lg ml-2 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 shadow-md">
+        Search
+      </button>
+    </div>
+
+
+    <div class="bg-white p-8 rounded-lg shadow-lg bg-opacity-80">
       <div id="error" class="text-red-500 mb-4 rounded-lg bg-red-100 px-6 py-5 text-base text-danger-700 hidden"></div>
-    
+
       <div class="weatherData">
         <div id="location" class="text-4xl font-bold mb-2 text-gray-800"></div>
         <div class="flex justify-between mb-6">
@@ -54,10 +63,7 @@
         </table>
       </div>
     </div>
-    
-    
   </div>
-  <!-- <button onclick="toggleDarkMode()">Toggle Dark Mode</button> -->
 
   <script src="scripts/index.js"></script>
 </body>

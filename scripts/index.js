@@ -29,6 +29,7 @@ async function getWeather() {
   windSpeedElement.innerHTML = `${data.wind.speed} m/s`;
   humidityElement.innerHTML = `${data.main.humidity} %`;
   document.querySelector("#error").innerHTML = '';
+  document.querySelector("#error").className = "hidden"
 }
 
 function toggleDarkMode() {
