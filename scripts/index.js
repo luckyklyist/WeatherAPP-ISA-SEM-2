@@ -1,6 +1,7 @@
 async function getWeather() {
-  let cityInput = document.getElementById('city-input').value || "Aberdeen";
+  let cityInput = document.getElementById('city-input').value || "Aberdeen"; // getting the city input name along with default cityname Aberdeen
   const data = await getWeatherData(cityInput);
+  // handaling city not found
   if (data.cod == 404) {
     const errorDom = document.querySelector("#error")
     errorDom.innerHTML = `${cityInput} City not found`
@@ -16,12 +17,12 @@ async function getWeather() {
   currentData(data.timezone);
 
   locationElement.innerHTML = 'City: ' + cityInput;
+  // adding the weather icon
   temperatureElement.innerHTML =
     `
     <span>
     ${data.main.temp}℃ 
     <img src="http://openweathermap.org/img/w/${data.weather[0].icon}.png" alt="Weather Icon">
-    
     </span>
     `;
   descriptionElement.innerHTML = `Description: ${data.weather[0].main}`;
@@ -37,7 +38,7 @@ function toggleDarkMode() {
   bodyElement.classList.toggle('dark-mode');
 }
 
-
+// fetching the weather data from openweather
 const getWeatherData = async (cityName) => {
   const apiKEY = "23d7b189189528d5ade1c10729887b94"
   const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&appid=${apiKEY}`;
@@ -46,6 +47,7 @@ const getWeatherData = async (cityName) => {
   return weatherData;
 }
 
+// getting the current date and time of the city using the timezone
 function currentData(timezone) {
   let currentDate = new Date();
   let utcOffset = currentDate.getTimezoneOffset() * 60 * 1000;
@@ -58,10 +60,7 @@ function currentData(timezone) {
   document.getElementById('current-day-and-date').textContent = formattedDate;
 }
 
-
-
-
-
+// adding the addEventListner to listen the input using the input button
 document.querySelector("#city-input").addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
     getWeather();
