@@ -23,7 +23,10 @@
             <!-- Displaying weather data part -->
             <div class="weatherData">
                <?php
-               include './includes/displayWeatherData.php'
+               include './includes/db_connection.php';
+               include './includes/displayWeatherData.php';
+
+               $conn = connectToDatabase();
                ?>
             </div>
 
@@ -32,16 +35,7 @@
                 <h2 class="text-xl font-semibold mb-4">Weather History (Past 7 Days)</h2>
                 <div class="grid grid-cols-7 gap-4">
                     <?php
-                    $servername = "localhost";
-                    $username = "root"; // Your MySQL username
-                    $password = ""; // Your MySQL password
-                    $database = "weather"; // Your database name
                     
-                    $conn = new mysqli($servername, $username, $password, $database);
-
-                    if ($conn->connect_error) {
-                        die("Connection failed: " . $conn->connect_error);
-                    }
 
                     $sql = "SELECT * FROM weather_data ORDER BY current_day_and_date DESC LIMIT 7";
                     $result = $conn->query($sql);
