@@ -1,4 +1,4 @@
-# Weather App
+# Weather App [Part 2]
 
 This is a weather application that allows users to retrieve weather information for a given location. It uses the OpenWeather API to fetch real-time weather data.
 
