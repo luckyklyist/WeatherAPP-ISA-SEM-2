@@ -103,32 +103,43 @@
         $weatherData = fetchWeatherData($apiKey, $city);
 
         if ($weatherData['cod'] === 200) {
-            saveWeatherData($conn, $city, $weatherData);
-
-            echo '<div id="location" class="text-4xl font-bold mb-2 text-gray-800">City: '. $city . '</div>';
-            echo '<div class="flex justify-between mb-6">';
-            echo '<div id="temperature" class="text-6xl font-bold text-gray-900"> ' . $weatherData['main']['temp'] . '°C</div>';
-            echo '<div class="flex flex-col justify-end">';
-            echo '<div id="description" class="text-lg text-gray-600 mb-2"> Description :' . $weatherData['weather'][0]['description'] . '</div>';
-            echo '<div id="current-day-and-date" class="text-lg text-gray-600">' . date('Y-m-d') . '</div>';
-            echo '</div>';
-            echo '</div>';
-            echo '<table class="w-full">';
-            echo '<tbody>';
-            echo '<tr class="border-b">';
-            echo '<td class="py-2 text-lg text-gray-600">Pressure:</td>';
-            echo '<td id="pressure" class="py-2 text-lg text-gray-600">' . $weatherData['main']['pressure'] . 'MBar</td>';
-            echo '</tr>';
-            echo '<tr class="border-b">';
-            echo '<td class="py-2 text-lg text-gray-600">Wind Speed:</td>';
-            echo '<td id="windSpeed" class="py-2 text-lg text-gray-600">' . $weatherData['wind']['speed'] . ' m/s</td>';
-            echo '</tr>';
-            echo '<tr>';
-            echo '<td class="py-2 text-lg text-gray-600">Humidity:</td>';
-            echo '<td id="humidity" class="py-2 text-lg text-gray-600">' . $weatherData['main']['humidity'] . '%</td>';
-            echo '</tr>';
-            echo '</tbody>';
-            echo '</table>';
+          saveWeatherData($conn, $city, $weatherData);
+          ?>
+          <div id="location" class="text-4xl font-bold mb-2 text-gray-800">City: <?= $city ?></div>
+          <div class="flex justify-between mb-6">
+              <div id="temperature" class="text-6xl font-bold text-gray-900">
+                  <?= $weatherData['main']['temp'] ?>°C
+              </div>
+              <div class="flex flex-col justify-end">
+                  <div id="description" class="text-lg text-gray-600 mb-2">
+                      Description: <?= $weatherData['weather'][0]['description'] ?>
+                  </div>
+                  <div id="current-day-and-date" class="text-lg text-gray-600"><?= date('Y-m-d') ?></div>
+              </div>
+          </div>
+          <table class="w-full">
+              <tbody>
+                  <tr class="border-b">
+                      <td class="py-2 text-lg text-gray-600">Pressure:</td>
+                      <td id="pressure" class="py-2 text-lg text-gray-600">
+                          <?= $weatherData['main']['pressure'] ?>MBar
+                      </td>
+                  </tr>
+                  <tr class="border-b">
+                      <td class="py-2 text-lg text-gray-600">Wind Speed:</td>
+                      <td id="windSpeed" class="py-2 text-lg text-gray-600">
+                          <?= $weatherData['wind']['speed'] ?> m/s
+                      </td>
+                  </tr>
+                  <tr>
+                      <td class="py-2 text-lg text-gray-600">Humidity:</td>
+                      <td id="humidity" class="py-2 text-lg text-gray-600">
+                          <?= $weatherData['main']['humidity'] ?>%
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+      <?php
         } else {
             echo "Error fetching weather data from the API.";
         }
