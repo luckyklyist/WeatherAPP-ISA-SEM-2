@@ -3,46 +3,49 @@ include 'fetchWeatherData.php';
 
 function saveWeatherData($conn, $city, $weatherData)
 {
-    $temperature = $weatherData['main']['temp'];
-    $description = $weatherData['weather'][0]['description'];
-    $currentDate = date('Y-m-d');
-    $pressure = $weatherData['main']['pressure'];
-    $windSpeed = $weatherData['wind']['speed'];
-    $humidity = $weatherData['main']['humidity'];
-    $icon = $weatherData['weather'][0]['icon'];
+    // Check if the city is Aberdeen (for storing the data of default city only)
+    if ($city === "Aberdeen") {
+        $temperature = $weatherData['main']['temp'];
+        $description = $weatherData['weather'][0]['description'];
+        $currentDate = date('Y-m-d');
+        $pressure = $weatherData['main']['pressure'];
+        $windSpeed = $weatherData['wind']['speed'];
+        $humidity = $weatherData['main']['humidity'];
 
-    // Check if data already exists for today
-    $checkSql = "SELECT * FROM weather_data WHERE current_day_and_date = ?";
-    $checkStmt = $conn->prepare($checkSql);
-    $checkStmt->bind_param("s", $currentDate);
-    $checkStmt->execute();
-    $checkResult = $checkStmt->get_result();
+        // Check if data already exists for today
+        $checkSql = "SELECT * FROM weather_data WHERE current_day_and_date = ?";
+        $checkStmt = $conn->prepare($checkSql);
+        $checkStmt->bind_param("s", $currentDate);
+        $checkStmt->execute();
+        $checkResult = $checkStmt->get_result();
 
-    if ($checkResult->num_rows === 0) {
-        // Prepare the SQL statement for inserting new data
-        $insertSql = "INSERT INTO weather_data (city, temperature, description, current_day_and_date, pressure, wind_speed, humidity, icon) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        $insertStmt = $conn->prepare($insertSql);
-        $insertStmt->bind_param("ssssssss", $city, $temperature, $description, $currentDate, $pressure, $windSpeed, $humidity, $icon);
+        if ($checkResult->num_rows === 0) {
+            // Prepare the SQL statement for inserting new data
+            $insertSql = "INSERT INTO weather_data (city, temperature, description, current_day_and_date, pressure, wind_speed, humidity) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            $insertStmt = $conn->prepare($insertSql);
+            $insertStmt->bind_param("sssssss", $city, $temperature, $description, $currentDate, $pressure, $windSpeed, $humidity);
 
-        if ($insertStmt->execute()) {
-            echo "Today's weather data inserted successfully.";
+            if ($insertStmt->execute()) {
+                echo "Today's weather data inserted successfully.";
+            } else {
+                echo "Error: " . $insertSql . "<br>" . $conn->error;
+            }
+
+            $insertStmt->close();
         } else {
-            echo "Error: " . $insertSql . "<br>" . $conn->error;
+            echo "Weather data for today already exists.";
         }
 
-        $insertStmt->close();
+        $checkStmt->close();
     } else {
-        echo "Weather data for today already exists.";
+        echo "Weather data will only be saved for Aberdeen.";
     }
-
-    $checkStmt->close();
 }
 
 $apiKey = "23d7b189189528d5ade1c10729887b94";
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['city'])) {
     $city = $_POST['city'];
-}
-else{
+} else {
     $city = "Aberdeen";
 }
 $conn = new mysqli("localhost", "root", "", "weather"); // Update with your credentials

@@ -12,8 +12,10 @@
 <body class="bg-gray-100">
     <div class="container mx-auto py-20 text-center">
         <?php
-        include './includes/header.php'
-            ?>
+        include './includes/header.php';
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
+        ?>
 
 
         <div class="bg-white p-8 rounded-lg shadow-lg bg-opacity-80">
@@ -22,18 +24,20 @@
 
             <!-- Displaying weather data part -->
             <div class="weatherData">
-               <?php
-               include './includes/db_connection.php';
-               include './includes/displayWeatherData.php';
+                <?php
+                include './includes/db_connection.php';
+                include './includes/displayWeatherData.php';
 
-               $conn = connectToDatabase();
-               ?>
+                $conn = connectToDatabase();
+                echo "hello world";
+
+                ?>
             </div>
 
             <!-- Weather History -->
-            <?php 
+            <?php
             include './includes/displayWeatherHistory.php'
-            ?>
+                ?>
         </div>
     </div>
     <!-- <script src="scripts/index.js"></script> -->

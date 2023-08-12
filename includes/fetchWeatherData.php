@@ -1,7 +1,7 @@
 <?php
 function fetchWeatherData($apiKey, $city)
 {
-    $apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}";
+    $apiUrl = "https://api.openweathermap.org/data/2.5/weather?q={$city}&units=metric&appid={$apiKey}";
 
     $curl = curl_init($apiUrl);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
