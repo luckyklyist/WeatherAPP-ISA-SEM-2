@@ -13,6 +13,7 @@
                 echo '<div class="border p-4 rounded-lg bg-blue-100 text-center">';
                 echo '<div class="text-gray-600 mb-1">' . $row['current_day_and_date'] . '</div>';
                 echo '<div class="text-2xl text-blue-600">' . $row['temperature'] . '°C</div>';
+                echo '<div class="text-sm text-blue-600">' . $row['description'] . '°C</div>';
                 echo '</div>';
             }
         }
