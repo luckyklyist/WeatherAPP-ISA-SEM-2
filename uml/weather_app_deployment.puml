@@ -1,0 +1,41 @@
+@startuml
+
+!define APIURL https://api.openweathermap.org
+!define DBURL localhost
+
+!define API [Weather API]
+!define WebServer [Web Server]
+!define PHPApp [PHP Application]
+!define UserBrowser [User's Web Browser]
+!define DBServer [Database Server]
+!define MySQLDB [MySQL Database]
+
+!define APIArtifact [API Artifact]
+!define WebServerArtifact [Web Server Artifact]
+!define PHPAppArtifact [PHP Application Artifact]
+!define UserBrowserArtifact [User's Browser Artifact]
+!define DBServerArtifact [Database Server Artifact]
+!define MySQLDBArtifact [MySQL Database Artifact]
+
+!define note1
+!define note2
+
+!define Footbox note bottom
+
+artifact UserBrowserArtifact as UserBrowser
+UserBrowser --> WebServer : Requests Web Page
+note right of UserBrowser: Interacts with the app through the browser
+
+
+
+PHPApplication --> WeatherAPI : Fetch Weather Data
+PHPApplication --> Database : Store Weather Data
+
+note right of PHPApplication : Executes PHP code
+note left of WeatherAPI : External API
+note right of Database : Stores data
+
+WeatherAPI --> APIURL : Sends API Request
+Database --> DBURL : Stores Data
+
+@enduml

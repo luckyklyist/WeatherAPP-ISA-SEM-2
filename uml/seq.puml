@@ -40,6 +40,14 @@ deactivate Database
 
 WeatherApp -> User: Display past weather data
 
+User -> WeatherApp: Search for weather data
+WeatherApp -> WeatherAPI: Fetch search data
+activate WeatherAPI
+WeatherAPI --> WeatherApp: Search data
+deactivate WeatherAPI
+
+WeatherApp -> User: Display search data
+
 User -> WeatherApp: Close app
 deactivate WeatherApp
 @enduml
