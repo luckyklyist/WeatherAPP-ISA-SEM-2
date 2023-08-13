@@ -1,0 +1,45 @@
+@startuml
+title Weather App Sequence Diagram
+footer Created by Anupam Chauhan | University ID: 2358278
+
+actor User
+participant WeatherApp
+participant WeatherAPI
+participant Database
+
+User -> WeatherApp: Open app
+activate WeatherApp
+
+User -> WeatherApp: Request weather data
+WeatherApp -> WeatherAPI: Fetch weather data
+activate WeatherAPI
+WeatherAPI --> WeatherApp: Weather data
+deactivate WeatherAPI
+
+WeatherApp -> User: Display weather data
+
+WeatherApp -> Database: Check existing data for today
+activate Database
+Database -> WeatherApp: Existing data status (Exists/Not Exists)
+deactivate Database
+
+alt Data for today does not exist in DB
+    WeatherApp -> Database: Save new weather data
+    activate Database
+    Database --> WeatherApp: Data saved
+    deactivate Database
+else Data for today exists in DB
+    WeatherApp -> User: Data for today already exists
+end
+
+User -> WeatherApp: Display past 7 days' data
+WeatherApp -> Database: Fetch past weather data
+activate Database
+Database --> WeatherApp: Past weather data
+deactivate Database
+
+WeatherApp -> User: Display past weather data
+
+User -> WeatherApp: Close app
+deactivate WeatherApp
+@enduml
