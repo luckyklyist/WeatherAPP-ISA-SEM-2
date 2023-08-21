@@ -6,8 +6,6 @@ function connectToDatabase()
     $password = "";
     $database = "weather";
 
-    echo "connecting to the db";
-
     $conn = new mysqli($servername, $username, $password, $database);
 
 
@@ -16,8 +14,6 @@ function connectToDatabase()
 
         die("Connection failed: " . $conn->connect_error);
     }
-
-    echo "connected to the db";
 
     return $conn;
 }

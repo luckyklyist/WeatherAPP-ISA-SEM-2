@@ -1,6 +1,5 @@
 @startuml
 title Weather App Activity Diagram - Default City and Search
-footer Created by Anupam Chauhan | University ID: 2358278
 
 start
 
@@ -10,6 +9,8 @@ start
 
 if (Weather data for default city does not exist in DB?) then (yes)
     :Save weather data for default city to DB;
+else (no)
+    :Display weather data;
 endif
 
 :Fetch past 7 days' data for default city from DB;

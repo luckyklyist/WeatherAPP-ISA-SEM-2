@@ -29,7 +29,6 @@
                 include './includes/displayWeatherData.php';
 
                 $conn = connectToDatabase();
-                echo "hello world";
 
                 ?>
             </div>
