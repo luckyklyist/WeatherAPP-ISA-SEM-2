@@ -35,7 +35,13 @@ function saveWeatherData($conn, $city, $weatherData)
     }
 
     $checkStmt->close();
-
+    ?>
+    <script>
+        var weatherData = <?php echo json_encode($weatherData); ?>;
+        var city = <?php echo json_encode($city); ?>;
+        localStorage.setItem(city, JSON.stringify(weatherData));
+    </script>
+    <?php
 }
 
 $conn = new mysqli("localhost", "root", "", "weather"); // Update with your credentials
@@ -52,7 +58,7 @@ if ($conn->connect_error) {
 
 $weatherData = fetchWeatherData($apiKey, $city);
 
-if ($weatherData['cod'] === 200) {
+if ($weatherData) {
     saveWeatherData($conn, $city, $weatherData);
     ?>
     <div id="location" class="text-4xl font-bold mb-2 text-gray-800">City:
@@ -94,6 +100,60 @@ if ($weatherData['cod'] === 200) {
             </tr>
         </tbody>
     </table>
+    <?php
+} else if (!$weatherData) {
+    // Display error message based on the API response code
+    echo "You are offline";
+    ?>
+        <html>
+        <div id="location" class="text-4xl font-bold mb-2 text-gray-800">City:</div>
+        <div class="flex justify-between mb-6">
+            <div id="temperature" class="text-6xl font-bold text-gray-900">°C</div>
+            <div class="flex flex-col justify-end">
+                <div id="description" class="text-lg text-gray-600 mb-2">Description:</div>
+                <div id="current-day-and-date" class="text-lg text-gray-600"></div>
+            </div>
+        </div>
+        <table class="w-full">
+            <tbody>
+                <tr class="border-b">
+                    <td class="py-2 text-lg text-gray-600">Pressure:</td>
+                    <td id="pressure" class="py-2 text-lg text-gray-600">MBar</td>
+                </tr>
+                <tr class="border-b">
+                    <td class="py-2 text-lg text-gray-600">Wind Speed:</td>
+                    <td id="windSpeed" class="py-2 text-lg text-gray-600">m/s</td>
+                </tr>
+                <tr>
+                    <td class="py-2 text-lg text-gray-600">Humidity:</td>
+                    <td id="humidity" class="py-2 text-lg text-gray-600">%</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <script>
+            function displayWeatherData(data) {
+                document.getElementById("location").textContent = "City: " + data.name;
+                document.getElementById("temperature").textContent = data.main.temp + "°C";
+                document.getElementById("description").textContent = "Description: " + data.weather[0].description;
+                document.getElementById("current-day-and-date").textContent = "Date: " + new Date(data.dt * 1000).toLocaleDateString();
+                document.getElementById("pressure").textContent = data.main.pressure + "MBar";
+                document.getElementById("windSpeed").textContent = data.wind.speed + " m/s";
+                document.getElementById("humidity").textContent = data.main.humidity + "%";
+            }
+
+            // Retrieve weather data from local storage
+            var city = <?php echo json_encode($city); ?>;
+            var storedWeatherData = localStorage.getItem(city);
+            if (storedWeatherData) {
+                var data = JSON.parse(storedWeatherData);
+                displayWeatherData(data);
+            } else {
+                console.log("No weather data available in local storage.");
+            }
+        </script>
+
+        </html>
     <?php
 } else {
     echo "Error fetching weather data from the API.";

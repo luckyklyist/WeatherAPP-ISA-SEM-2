@@ -8,9 +8,10 @@ function fetchWeatherData($apiKey, $city)
     $apiResponse = curl_exec($curl);
 
     if ($apiResponse === false) {
-        echo "Error fetching weather data from the API: " . curl_error($curl);
-        curl_close($curl);
-        exit();
+        echo "Error fetching weather data from the API: ";
+        // curl_close($curl);
+        // exit();
+        return json_decode($apiResponse, false);
     }
 
     curl_close($curl);
