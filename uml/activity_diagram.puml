@@ -5,12 +5,17 @@ start
 
 :User opens the webapp;
 :Fetch weather data from API for default city;
-:Display weather data for default city;
 
-if (Weather data for default city does not exist in DB?) then (yes)
-    :Save weather data for default city to DB;
+if (Request to OpenWeather API fails) then (yes)
+    :Display weather data from localStorage for default city if available;
 else (no)
-    :Display weather data;
+    :Save weather data for default city to localStorage with city name as key;
+    if (Weather data for default city does not exist in DB?) then (yes)
+        :Save weather data for default city to DB;
+        :Display weather data;
+    else (no)
+        :Display weather data;
+    endif
 endif
 
 :Fetch past 7 days' data for default city from DB;
@@ -18,7 +23,13 @@ endif
 
 :User searches for weather by city;
 :Fetch weather data from API for the searched city;
-:Display weather data for the searched city;
+if (Request to OpenWeather API fails) then (yes)
+    :Display weather data from localStorage for searched city if available;
+else (no)
+    :Display weather data for the searched city;
+    :Save weather data for searched city to DB;
+    :Save weather data for searched city to localStorage with city name as key;
+endif
 
 stop
 

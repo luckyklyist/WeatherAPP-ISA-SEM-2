@@ -19,3 +19,7 @@ function fetchWeatherData($apiKey, $city)
     return json_decode($apiResponse, true);
 }
 ?>
+
+
+
+
