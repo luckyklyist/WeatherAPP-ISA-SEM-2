@@ -13,7 +13,16 @@ activate WeatherApp
 User -> WeatherApp: Request weather data
 WeatherApp -> WeatherAPI: Fetch weather data
 activate WeatherAPI
-WeatherAPI --> WeatherApp: Weather data
+
+alt Issue fetching from WeatherAPI
+    WeatherAPI --> WeatherApp: Error fetching data
+    WeatherApp -> Database: Fetch weather data from localStorage
+    activate Database
+    Database --> WeatherApp: Weather data from localStorage
+    deactivate Database
+else
+    WeatherAPI --> WeatherApp: Weather data
+end
 deactivate WeatherAPI
 
 WeatherApp -> User: Display weather data
@@ -25,10 +34,15 @@ deactivate Database
 
 alt Data for today does not exist in DB
     WeatherApp -> Database: Save new weather data
+    WeatherApp -> Database: Save new weather data in localstorage with the city name key
     activate Database
     Database --> WeatherApp: Data saved
     deactivate Database
+
+    WeatherApp -> User: Data saved successfully
+
 else Data for today exists in DB
+    WeatherApp ->: Save new weather data in localstorage with the city name key
     WeatherApp -> User: Data for today already exists
 end
 
@@ -43,10 +57,50 @@ WeatherApp -> User: Display past weather data
 User -> WeatherApp: Search for weather data
 WeatherApp -> WeatherAPI: Fetch search data
 activate WeatherAPI
-WeatherAPI --> WeatherApp: Search data
+
+alt Issue fetching from WeatherAPI
+    WeatherAPI --> WeatherApp: Error fetching data
+    WeatherApp -> Database: Fetch search data from localStorage
+    activate Database
+    Database --> WeatherApp: Search data from localStorage
+    deactivate Database
+else
+    WeatherAPI --> WeatherApp: Search data
+    WeatherApp -> Database: Save search data in localstorage with the search query as key
+    activate Database
+    Database --> WeatherApp: Data saved
+    deactivate Database
+end
 deactivate WeatherAPI
 
-WeatherApp -> User: Display search data
+WeatherApp -> Database: Check existing data for today
+activate Database
+Database -> WeatherApp: Existing data status (Exists/Not Exists)
+deactivate Database
+
+alt Data for today does not exist in DB
+    WeatherApp -> Database: Save new weather data
+    WeatherApp -> Database: Save new weather data in localstorage with the city name key
+    activate Database
+    Database --> WeatherApp: Data saved
+    deactivate Database
+
+    WeatherApp -> User: Data saved successfully
+
+else Data for today exists in DB
+    WeatherApp ->: Save new weather data in localstorage with the city name key
+    WeatherApp -> User: Data for today already exists
+end
+
+User -> WeatherApp: Display past 7 days' data
+WeatherApp -> Database: Fetch past weather data
+activate Database
+Database --> WeatherApp: Past weather data
+deactivate Database
+
+WeatherApp -> User: Display past weather data
+
+
 
 User -> WeatherApp: Close app
 deactivate WeatherApp
