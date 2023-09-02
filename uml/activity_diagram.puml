@@ -1,10 +1,10 @@
 @startuml
-title Weather App Activity Diagram - Default City and Search
+title Weather App Activity Diagram - Default City (Aberdeen) and Search
 
 start
 
 :User opens the webapp;
-:Fetch weather data from API for default city;
+:Fetch weather data from API for default city(Aberdeen);
 
 if (Request to OpenWeather API fails) then (yes)
     :Display weather data from localStorage for default city if available;
